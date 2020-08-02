@@ -21,5 +21,5 @@ mongoose.connect(process.env.URL_DB, OPTION_CONNECT, (err, res) => {
 })
 
 app.listen(process.env.PORT, () => {
-  console.log(`Listen on prot ${process.env.PORT}`)
+  console.log(`Listen on port ${process.env.PORT}`)
 })
