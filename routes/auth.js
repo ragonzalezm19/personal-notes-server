@@ -40,8 +40,8 @@ app.post('/auth/register', [validateNewUserData, verifyEmailDuplicity], async(re
 app.post('/auth/login', async(req, res) => {
   let body = req.body
 
-  const userFounded = await User.findOne({ email: body.email })
-  if (!userFounded) {
+  const userFound = await User.findOne({ email: body.email })
+  if (!userFound) {
     return res.status(404).json({
       err: {
         message: 'User not found'
@@ -49,7 +49,7 @@ app.post('/auth/login', async(req, res) => {
     })
   }
 
-  if (!bcrypt.compareSync(body.password, userFounded.password)) {
+  if (!bcrypt.compareSync(body.password, userFound.password)) {
     return res.status(400).json({
       err: {
         messege: 'Email or password incorrect'
@@ -57,12 +57,12 @@ app.post('/auth/login', async(req, res) => {
     })
   }
 
-  const token = singToken(userFounded)
+  const token = singToken(userFound)
 
   res.json({
     user: {
-      name: userFounded.name,
-      email: userFounded.email
+      name: userFound.name,
+      email: userFound.email
     },
     token
   })
